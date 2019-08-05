@@ -39,7 +39,6 @@ class Login extends Component {
 
     this.setState({ isLoading: true });
 
-    let isUnmounted = false;
     try {
       const loggedInUser = await Auth.signIn({
         username: this.state.email,
@@ -52,12 +51,8 @@ class Login extends Component {
 
       this.props.userHasAuthenticated(true);
       this.props.history.push("/login");
-      isUnmounted = true;
     } catch (e) {
       alert(e.message);
-    }
-
-    if (!isUnmounted) {
       this.setState({ isLoading: false });
     }
   }
