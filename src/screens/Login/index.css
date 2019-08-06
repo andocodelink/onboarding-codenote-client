@@ -1,15 +1,15 @@
 @media all and (min-width: 480px) {
-  .Login {
+  .login {
     padding: 60px 0;
   }
 
-  .Login form {
+  .login form {
     margin: 0 auto;
     max-width: 320px;
   }
 }
 
-.Login form span.help-block {
+.login form span.help-block {
   font-size: 14px;
   padding-bottom: 10px;
   color: #999;

@@ -10,16 +10,12 @@ import LoaderButton from '../../components/LoaderButton';
 import "./index.css";
 
 class Login extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      isLoading: false,
-      email: "",
-      password: "",
-      loggedInUser: null
-    };
-  }
+  state = {
+    isLoading: false,
+    email: "",
+    password: "",
+    loggedInUser: null
+  };
 
   validateForm() {
     return (
@@ -46,7 +42,7 @@ class Login extends Component {
       });
 
       this.setState({
-        loggedInUser: loggedInUser
+        loggedInUser
       });
 
       this.props.userHasAuthenticated(true);
@@ -57,43 +53,37 @@ class Login extends Component {
     }
   }
 
-  renderForm() {
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <FormGroup controlId="email" bsSize="large">
-          <ControlLabel>Email</ControlLabel>
-          <FormControl
-            autoFocus
-            type="email"
-            value={this.state.email}
-            onChange={this.handleChange}
-          />
-        </FormGroup>
-        <FormGroup controlId="password" bsSize="large">
-          <ControlLabel>Password</ControlLabel>
-          <FormControl
-            value={this.state.password}
-            onChange={this.handleChange}
-            type="password"
-          />
-        </FormGroup>
-        <LoaderButton
-          block
-          bsSize="large"
-          disabled={!this.validateForm()}
-          type="submit"
-          isLoading={this.state.isLoading}
-          text="Login"
-          loadingText="Logging in…"
-        />
-      </form>
-    );
-  }
-
   render() {
     return (
-      <div className="Login">
-        {this.renderForm()}
+      <div className="login">
+        <form onSubmit={this.handleSubmit}>
+          <FormGroup controlId="email" bsSize="large">
+            <ControlLabel>Email</ControlLabel>
+            <FormControl
+              autoFocus
+              type="email"
+              value={this.state.email}
+              onChange={this.handleChange}
+            />
+          </FormGroup>
+          <FormGroup controlId="password" bsSize="large">
+            <ControlLabel>Password</ControlLabel>
+            <FormControl
+              value={this.state.password}
+              onChange={this.handleChange}
+              type="password"
+            />
+          </FormGroup>
+          <LoaderButton
+            block
+            bsSize="large"
+            disabled={!this.validateForm()}
+            type="submit"
+            isLoading={this.state.isLoading}
+            text="Login"
+            loadingText="Logging in…"
+          />
+        </form>
       </div>
     );
   }

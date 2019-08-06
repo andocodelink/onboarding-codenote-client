@@ -1,8 +1,8 @@
-.NoteAdding form {
+.note-form form {
   padding-bottom: 15px;
 }
 
-.NoteAdding form textarea {
+.note-form form textarea {
   height: 300px;
   font-size: 24px;
 }
