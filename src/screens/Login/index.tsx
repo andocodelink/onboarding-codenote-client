@@ -3,8 +3,10 @@ import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import { Auth } from 'aws-amplify';
 import LoaderButton from '../../components/LoaderButton';
 import "./index.css";
+import { connect } from 'react-redux'
+import { login } from '../../actions';
 
-export default class Login extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
 
@@ -32,10 +34,11 @@ export default class Login extends Component {
 
     try {
       await Auth.signIn(this.state.email, this.state.password);
-      this.props.userHasAuthenticated(true);
+      this.props.loginSucceed()
     } catch (e) {
       alert(e.message);
       this.setState({ isLoading: false });
+      this.props.loginFailed()
     }
   }
 
@@ -74,3 +77,17 @@ export default class Login extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.authenticate.isAuthenticated
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  loginSucceed: () => dispatch(login(true)),
+  loginFailed: () => dispatch(login(false)),
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Login);

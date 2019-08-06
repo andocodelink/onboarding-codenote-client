@@ -6,6 +6,9 @@ import './index.css';
 import config from './config';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import rootReducer from './reducers'
 
 Amplify.configure({
   Auth: {
@@ -31,9 +34,13 @@ Amplify.configure({
   }
 });
 
+const store = createStore(rootReducer);
+
 ReactDOM.render(
   <Router>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </Router>,
   document.getElementById('root')
 );
