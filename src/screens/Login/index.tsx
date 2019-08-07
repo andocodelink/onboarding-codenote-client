@@ -3,8 +3,9 @@ import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import { Auth } from 'aws-amplify';
 import LoaderButton from '../../components/LoaderButton';
 import "./index.css";
+import { connectAuthen } from '../../containers'
 
-export default class Login extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
 
@@ -32,10 +33,11 @@ export default class Login extends Component {
 
     try {
       await Auth.signIn(this.state.email, this.state.password);
-      this.props.userHasAuthenticated(true);
+      this.props.loginSucceeded()
     } catch (e) {
       alert(e.message);
       this.setState({ isLoading: false });
+      this.props.loginFailed()
     }
   }
 
@@ -74,3 +76,5 @@ export default class Login extends Component {
     );
   }
 }
+
+export default connectAuthen(Login);

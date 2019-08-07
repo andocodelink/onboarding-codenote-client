@@ -1,14 +1,17 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
+import { connectAuthen } from '../../containers'
 
-export default ({ component: C, props: cProps, ...rest }) =>
+const AuthenticatedRoute = ({ component: C, isAuthenticated, props: cProps = {}, ...rest }) =>
   <Route
     {...rest}
     render={props =>
-      cProps.isAuthenticated
+      isAuthenticated
         ? <C {...props} {...cProps} />
         : <Redirect
             to={`/login?redirect=${props.location.pathname}${props.location
               .search}`}
           />}
   />;
+
+export default connectAuthen(AuthenticatedRoute);

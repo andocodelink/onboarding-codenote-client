@@ -3,6 +3,7 @@ import { API } from 'aws-amplify';
 import { PageHeader, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import "./index.css";
+import { connectAuthen } from '../../containers'
 
 class Home extends Component {
   constructor(props) {
@@ -87,4 +88,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default connectAuthen(Home);
