@@ -1,13 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from "react-router-dom";
 import Amplify from 'aws-amplify';
+
 import './index.css';
 import config from './config';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
 import rootReducer from './reducers'
 
 Amplify.configure({

@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+
 import { login, logout } from '../actions';
 
 const mapStateToProps = (state) => ({
@@ -6,7 +7,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  loginSucceed: () => dispatch(login(true)),
+  loginSucceeded: () => dispatch(login(true)),
   loginFailed: () => dispatch(login(false)),
   logout: () => dispatch(logout())
 })
