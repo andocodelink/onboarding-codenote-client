@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 import { Auth } from 'aws-amplify';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { connect } from 'react-redux'
-import { logout } from '../../actions';
+import { connectAuthen } from '../../containers';
 
 class Navigation extends React.Component {
 
@@ -37,16 +36,5 @@ class Navigation extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.authenticate.isAuthenticated
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  logout: () => dispatch(logout())
-})
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Navigation);
+export default connectAuthen(Navigation);
 

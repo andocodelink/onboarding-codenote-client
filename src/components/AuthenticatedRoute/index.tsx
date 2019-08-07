@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import { connect } from 'react-redux'
+import { connectAuthen } from '../../containers'
 
 const AuthenticatedRoute = ({ component: C, isAuthenticated, props: cProps = {}, ...rest }) =>
   <Route
@@ -14,10 +14,4 @@ const AuthenticatedRoute = ({ component: C, isAuthenticated, props: cProps = {},
           />}
   />;
 
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.authenticate.isAuthenticated
-});
-
-export default connect(
-  mapStateToProps
-)(AuthenticatedRoute);
+export default connectAuthen(AuthenticatedRoute);

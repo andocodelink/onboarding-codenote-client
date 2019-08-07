@@ -3,8 +3,7 @@ import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import { Auth } from 'aws-amplify';
 import LoaderButton from '../../components/LoaderButton';
 import "./index.css";
-import { connect } from 'react-redux'
-import { login } from '../../actions';
+import { connectAuthen } from '../../containers'
 
 class Login extends Component {
   constructor(props) {
@@ -78,16 +77,4 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.authenticate.isAuthenticated
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  loginSucceed: () => dispatch(login(true)),
-  loginFailed: () => dispatch(login(false)),
-})
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Login);
+export default connectAuthen(Login);
