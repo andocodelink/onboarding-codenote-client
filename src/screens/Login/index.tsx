@@ -15,8 +15,7 @@ interface IProps {
 interface IState {
   email: string,
   password: string,
-  isLoading: boolean,
-  [eventTargetId: number]: any
+  isLoading: boolean
 }
 
 class Login extends Component<IProps, IState> {
@@ -37,7 +36,7 @@ class Login extends Component<IProps, IState> {
   handleChange = event => {
     this.setState({
       [event.target.id]: event.target.value
-    });
+    } as IState);
   }
 
   handleSubmit = async event => {

@@ -4,10 +4,27 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { PageHeader, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+
 import { userHasAuthenticated } from '../../actions/authenticate';
+
 import "./index.css";
 
-class Home extends Component {
+interface IProps {
+  isAuthenticated: boolean,
+}
+
+interface INote {
+  noteId: string
+  content: string,
+  createdAt: Date
+}
+
+interface IState {
+  isLoading: boolean
+  notes: INote[],
+}
+
+class Home extends Component<IProps, IState> {
   constructor(props) {
     super(props);
 
@@ -33,12 +50,12 @@ class Home extends Component {
   }
 
   notes() {
-    return API.get("notes", "/notes");
+    return API.get("notes", "/notes", null);
   }
 
-  renderNotesList(notes) {
+  renderNotesList(notes: INote[]) {
     return [{}].concat(notes).map(
-      (note, i) =>
+      (note: INote, i) =>
         i !== 0
           ? <LinkContainer
               key={note.noteId}

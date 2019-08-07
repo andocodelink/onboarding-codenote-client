@@ -3,12 +3,26 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { Auth } from 'aws-amplify';
+import * as H from 'history';
+
 import logo from './logo.svg';
 import './App.css';
+
 import { userHasAuthenticated } from './actions/authenticate';
 import ScreensRoot from './screens/Root';
+import { ImageProps } from 'react-bootstrap';
+import { IsAuthenticated } from 'aws-sdk/clients/iot';
 
-class App extends Component {
+interface IProps {
+  userHasAuthenticated: (isAuthenticated: boolean) => void,
+  history: H.History
+}
+
+interface IState {
+  isAuthenticating: boolean
+}
+
+class App extends Component<IProps, IState> {
   constructor(props) {
     super(props);
 

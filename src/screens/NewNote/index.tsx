@@ -13,8 +13,7 @@ interface IProps {
 
 interface IState {
   isLoading: boolean,
-  content: string,
-  [eventTargetId: number]: any
+  content: string
 }
 
 export default class NewNote extends Component<IProps, IState> {
@@ -38,7 +37,7 @@ export default class NewNote extends Component<IProps, IState> {
   handleChange = event => {
     this.setState({
       [event.target.id]: event.target.value
-    });
+    } as IState);
   }
 
   handleFileChange = event => {
