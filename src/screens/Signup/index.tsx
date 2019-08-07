@@ -6,10 +6,27 @@ import {
   ControlLabel
 } from "react-bootstrap";
 import { Auth } from 'aws-amplify';
+import * as H from 'history';
+
 import LoaderButton from '../../components/LoaderButton';
+
 import "./index.css";
 
-class Signup extends Component {
+interface IProps {
+  history: H.History,
+  userHasAuthenticated: (isAuthenticated: boolean) => void
+}
+
+interface IState {
+  isLoading: boolean,
+  email: string,
+  password: string,
+  confirmPassword: string,
+  confirmationCode: string,
+  newUser: {}
+}
+
+class Signup extends Component<IProps, IState> {
   constructor(props) {
     super(props);
 
@@ -38,7 +55,7 @@ class Signup extends Component {
   handleChange = event => {
     this.setState({
       [event.target.id]: event.target.value
-    });
+    } as IState);
   }
 
   handleSubmit = async event => {

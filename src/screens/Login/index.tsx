@@ -7,7 +7,18 @@ import LoaderButton from '../../components/LoaderButton';
 import { userHasAuthenticated } from '../../actions/authenticate';
 import "./index.css";
 
-class Login extends Component {
+
+interface IProps {
+  userHasAuthenticated: (isAuthenticated: boolean) => void
+}
+
+interface IState {
+  email: string,
+  password: string,
+  isLoading: boolean
+}
+
+class Login extends Component<IProps, IState> {
   constructor(props) {
     super(props);
 
@@ -25,7 +36,7 @@ class Login extends Component {
   handleChange = event => {
     this.setState({
       [event.target.id]: event.target.value
-    });
+    } as IState);
   }
 
   handleSubmit = async event => {

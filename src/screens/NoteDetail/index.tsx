@@ -1,12 +1,37 @@
 import React, { Component } from "react";
 import { API, Storage } from "aws-amplify";
 import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
-import './index.css';
+import * as H from 'history'
+
 import LoaderButton from '../../components/LoaderButton';
 import config from '../../config';
 import { s3Upload } from '../../libs/awsLib';
 
-class NoteDetail extends Component {
+import './index.css';
+
+interface IProps {
+  history: H.History,
+  match: { params: { id: string } }
+}
+
+interface INote {
+  noteId: string
+  content: string,
+  attachment: string,
+  createdAt: Date
+}
+
+interface IState {
+  isLoading: boolean,
+  isDeleting: boolean,
+  note: INote,
+  content: string,
+  attachmentURL: string
+}
+
+class NoteDetail extends Component<IProps, IState> {
+  file: any
+
   constructor(props) {
     super(props);
 
@@ -42,7 +67,7 @@ class NoteDetail extends Component {
   }
 
   getNote() {
-    return API.get("notes", `/notes/${this.props.match.params.id}`);
+    return API.get("notes", `/notes/${this.props.match.params.id}`, null);
   }
 
   saveNote(note) {
@@ -52,7 +77,7 @@ class NoteDetail extends Component {
   }
 
   deleteNote() {
-    return API.del('notes', `/notes/${this.props.match.params.id}`);
+    return API.del('notes', `/notes/${this.props.match.params.id}`, null);
   }
 
   validateForm() {
@@ -66,7 +91,7 @@ class NoteDetail extends Component {
   handleChange = event => {
     this.setState({
       [event.target.id]: event.target.value
-    });
+    } as IState);
   }
 
   handleFileChange = event => {
