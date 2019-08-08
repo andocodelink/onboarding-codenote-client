@@ -1,29 +1,25 @@
 import React, { Component } from "react";
-import { API } from 'aws-amplify';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { PageHeader, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+
 import { userHasAuthenticated } from '../../actions/authenticate';
+import { fetchNotes, INote } from '../../api';
+
 import "./index.css";
 
-interface INote {
-  noteId: string,
-  content: string,
-  createdAt: string,
-}
-
-interface IStates {
+export interface IStates {
   isLoading: boolean,
   notes: INote[],
 }
 
-interface IProps {
+export interface IProps {
   isAuthenticated: boolean,
   userHasAuthenticated: (boolean) => void,
 }
 
-class Home extends Component<IProps, IStates> {
+export class Home extends Component<IProps, IStates> {
   constructor(props) {
     super(props);
 
@@ -39,17 +35,13 @@ class Home extends Component<IProps, IStates> {
     }
 
     try {
-      const notes = await this.notes();
+      const notes = await fetchNotes();
       this.setState({ notes });
     } catch(e) {
       alert(e);
     }
 
     this.setState({ isLoading: false });
-  }
-
-  notes() {
-    return API.get("notes", "/notes", {});
   }
 
   renderNotesList(notes) {
