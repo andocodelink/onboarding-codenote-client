@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home screen renders with authentication 1`] = `
+<Route
+  id="id1"
+  props={
+    Object {
+      "id": "childId1",
+    }
+  }
+  render={[Function]}
+/>
+`;
+
+exports[`Home screen renders without authentication 1`] = `
+<Route
+  id="id1"
+  props={
+    Object {
+      "id": "childId1",
+    }
+  }
+  render={[Function]}
+/>
+`;

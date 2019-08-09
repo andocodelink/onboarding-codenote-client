@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from 'react-redux';
 import { Route, Redirect } from "react-router-dom";
 
-const AuthenticatedRoute = ({ component: C, isAuthenticated, ...rest }) =>
+export const AuthenticatedRoute = ({ component: C, isAuthenticated, ...rest }) =>
   <Route
     {...rest}
     render={props =>
@@ -14,7 +14,7 @@ const AuthenticatedRoute = ({ component: C, isAuthenticated, ...rest }) =>
           />}
   />;
 
-const mapStateToProps = (state) => ({
+export const mapStateToProps = (state) => ({
   isAuthenticated: state.authenticate.isAuthenticated,
 });
 

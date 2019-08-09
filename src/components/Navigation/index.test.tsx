@@ -1,8 +1,9 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { shallow, mount, render } from 'enzyme';
+import { Button } from 'react-bootstrap';
 
-import { Home, mapStateToProps, mapDispatchToProps } from './index';
+import { Navigation, mapStateToProps, mapDispatchToProps } from './index';
 
 describe('Home screen', () => {
   const userHasAuthenticated = () => ({});
@@ -16,22 +17,26 @@ describe('Home screen', () => {
     window.alert = jdomAlert;
   })
   
-  test('renders without authenication', () => {
-    const wrapper = shallow(<Home isAuthenticated={false} userHasAuthenticated={userHasAuthenticated} />);
+  test('renders', () => {
+    let history: any = jest.fn();
+    const wrapper = render(<MemoryRouter><Navigation isAuthenticated={true} history={history} userHasAuthenticated={(() => ({}))} /></MemoryRouter>);
     expect(wrapper).toMatchSnapshot();
   });
 
-  test('renders with authenication', () => {
-    const wrapper = shallow(<Home isAuthenticated={true} userHasAuthenticated={userHasAuthenticated} />);
-    expect(wrapper).toMatchSnapshot();
-  });
-
-  test('validate states with 10 notes', async () => {
-    let windowAlert: any = window.alert;
-    windowAlert.mockClear();
-    const wrapper = mount(<MemoryRouter><Home isAuthenticated={true} userHasAuthenticated={userHasAuthenticated} /></MemoryRouter>);
-    await Promise.resolve();
-    expect(wrapper.find('Home').state().notes).toHaveLength(10);
+  test('logout handler', async () => {
+    let history: any = jest.fn();
+    history.push = (..._) => ({})
+    let expectedIsAuthen = true;
+    let app = new Navigation({
+      isAuthenticated: true,
+      history: history,
+      userHasAuthenticated: ((isAuthen) => {
+        expectedIsAuthen = isAuthen;
+        return { expectedIsAuthen };
+      })
+    });
+    await app.handleLogout();
+    expect(expectedIsAuthen).toBe(false);
   });
 
   test('map state to props', () => {
@@ -42,7 +47,6 @@ describe('Home screen', () => {
     });
     expect(props.isAuthenticated).toBe(true);
   });
-
   test('map dispatch to props', () => {
     let dispatch = jest.fn();
     let props =  mapDispatchToProps(dispatch);
