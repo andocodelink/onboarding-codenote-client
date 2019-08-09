@@ -2,7 +2,7 @@ import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { shallow, mount, render } from 'enzyme';
 
-import { Home } from './index';
+import { Home, mapStateToProps, mapDispatchToProps } from './index';
 
 describe('Home screen', () => {
   const userHasAuthenticated = () => ({});
@@ -32,6 +32,21 @@ describe('Home screen', () => {
     const wrapper = mount(<MemoryRouter><Home isAuthenticated={true} userHasAuthenticated={userHasAuthenticated} /></MemoryRouter>);
     await Promise.resolve();
     expect(wrapper.find('Home').state().notes).toHaveLength(10);
+  });
+
+  test('map state to props', () => {
+    let props =  mapStateToProps({
+      authenticate: {
+        isAuthenticated: true 
+      }
+    });
+    expect(props.isAuthenticated).toBe(true);
+  });
+
+  test('map dispatch to props', () => {
+    let dispatch = jest.fn();
+    let props =  mapDispatchToProps(dispatch);
+    expect(props.userHasAuthenticated).toBeInstanceOf(Function);
   });
 
 })

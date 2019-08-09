@@ -1,5 +1,5 @@
 import { API } from 'aws-amplify';
-import { async } from 'q';
+import { Auth } from 'aws-amplify';
 
 export interface INote {
   noteId: string,
@@ -9,4 +9,12 @@ export interface INote {
 
 export const fetchNotes = () => {
     return API.get("notes", "/notes", {});
+}
+
+export const getCurrentSession = () => {
+  return Auth.currentSession();
+}
+
+export const logout = () => {
+  return Auth.signOut();
 }

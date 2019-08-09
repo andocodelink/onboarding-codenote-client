@@ -9,3 +9,11 @@ export const fetchNotes = () => {
         createdAt: Date.now().toLocaleString()
     }));
 }
+
+export const getCurrentSession = () => {
+    return Promise.resolve({});
+  }
+  
+export const logout = () => {
+  return Promise.resolve({});
+}

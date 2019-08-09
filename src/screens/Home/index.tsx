@@ -98,11 +98,11 @@ export class Home extends Component<IProps, IStates> {
   }
 }
 
-const mapStateToProps = (state) => ({
+export const mapStateToProps = (state) => ({
   isAuthenticated: state.authenticate.isAuthenticated,
 });
 
-const mapDispatchToProps = (dispatch) => bindActionCreators(
+export const mapDispatchToProps = (dispatch) => bindActionCreators(
   {
     userHasAuthenticated,
   },

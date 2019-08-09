@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import { Auth } from 'aws-amplify';
 import { History } from 'history';
-import logo from './logo.svg';
-import './App.css';
+
 import { userHasAuthenticated } from './actions/authenticate';
 import ScreensRoot from './screens/Root';
+import { getCurrentSession, logout } from './api'
+
+import logo from './logo.svg';
+import './App.css';
 
 interface IStates {
   isAuthenticating: boolean,
@@ -16,9 +18,15 @@ interface IStates {
 interface IProps {
   userHasAuthenticated: (boolean) => void,
   history: History,
+  renderChildren?: boolean
 }
 
-class App extends Component<IProps, IStates> {
+export class App extends Component<IProps, IStates> {
+  static defaultProps: IProps = {
+    userHasAuthenticated: () => ({}),
+    history: {} as History,
+    renderChildren: true
+  }
   constructor(props) {
     super(props);
 
@@ -29,7 +37,7 @@ class App extends Component<IProps, IStates> {
 
   async componentDidMount() {
     try {
-      await Auth.currentSession();
+      await getCurrentSession();
       this.props.userHasAuthenticated(true);
     }
     catch (e) {
@@ -41,8 +49,8 @@ class App extends Component<IProps, IStates> {
     this.setState({ isAuthenticating: false });
   }
 
-  handleLogout = async () => {
-    await Auth.signOut();
+  public handleLogout = async () => {
+    await logout();
     this.props.userHasAuthenticated(false);
     this.props.history.push('/login');
   }
@@ -51,13 +59,13 @@ class App extends Component<IProps, IStates> {
     return (
       !this.state.isAuthenticating &&
       <div className="App container">
-        <ScreensRoot />
+        {this.props.renderChildren && <ScreensRoot />}
       </div>
     );
   }
 }
 
-const mapDispatchToProps = (dispatch) => bindActionCreators(
+export const mapDispatchToProps = (dispatch) => bindActionCreators(
   {
     userHasAuthenticated,
   },
