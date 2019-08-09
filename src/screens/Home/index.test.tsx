@@ -26,12 +26,12 @@ describe('Home screen', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  test('renders with 10 notes', () => {
+  test('validate states with 10 notes', async () => {
     let windowAlert: any = window.alert;
     windowAlert.mockClear();
-    const wrapper = render(<MemoryRouter><Home isAuthenticated={true} userHasAuthenticated={userHasAuthenticated} /></MemoryRouter>);
-    expect(wrapper).toMatchSnapshot();
-    // expect(wrapper.get('Home').state().notes).toHaveLength(10);
+    const wrapper = mount(<MemoryRouter><Home isAuthenticated={true} userHasAuthenticated={userHasAuthenticated} /></MemoryRouter>);
+    await Promise.resolve();
+    expect(wrapper.find('Home').state().notes).toHaveLength(10);
   });
 
 })
