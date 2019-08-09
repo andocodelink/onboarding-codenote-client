@@ -1,6 +1,6 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import { shallow, mount, render } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 
 import { Home, mapStateToProps, mapDispatchToProps } from './index';
 
@@ -22,14 +22,14 @@ describe('Home screen', () => {
   });
 
   test('renders with authenication', () => {
-    const wrapper = shallow(<Home isAuthenticated={true} userHasAuthenticated={userHasAuthenticated} />);
+    const wrapper = shallow(<Home isAuthenticated userHasAuthenticated={userHasAuthenticated} />);
     expect(wrapper).toMatchSnapshot();
   });
 
   test('validate states with 10 notes', async () => {
     let windowAlert: any = window.alert;
     windowAlert.mockClear();
-    const wrapper = mount(<MemoryRouter><Home isAuthenticated={true} userHasAuthenticated={userHasAuthenticated} /></MemoryRouter>);
+    const wrapper = mount(<MemoryRouter><Home isAuthenticated  userHasAuthenticated={userHasAuthenticated} /></MemoryRouter>);
     await Promise.resolve();
     expect(wrapper.find('Home').state().notes).toHaveLength(10);
   });

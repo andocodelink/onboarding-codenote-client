@@ -19,7 +19,7 @@ describe('Home screen', () => {
   
   test('renders', () => {
     let history: any = jest.fn();
-    const wrapper = render(<MemoryRouter><Navigation isAuthenticated={true} history={history} userHasAuthenticated={(() => ({}))} /></MemoryRouter>);
+    const wrapper = render(<MemoryRouter><Navigation isAuthenticated history={history} userHasAuthenticated={(() => ({}))} /></MemoryRouter>);
     expect(wrapper).toMatchSnapshot();
   });
 

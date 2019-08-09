@@ -18,7 +18,7 @@ describe('Home screen', () => {
   })
   
   test('renders with authentication', () => {
-    const wrapper = shallow(<UnauthenticatedRoute id='id1' isAuthenticated={true} component={Button as any} props={{id: 'childId1'}}/>);
+    const wrapper = shallow(<UnauthenticatedRoute id='id1' isAuthenticated component={Button as any} props={{id: 'childId1'}}/>);
     expect(wrapper).toMatchSnapshot();
   });
 
