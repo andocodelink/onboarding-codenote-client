@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home screen renders with authenication 1`] = `
+<div
+  className="Home"
+>
+  <div
+    className="notes"
+  >
+    <PageHeader
+      bsClass="page-header"
+    >
+      All notes
+    </PageHeader>
+    <ListGroup
+      bsClass="list-group"
+    />
+  </div>
+</div>
+`;
+
+exports[`Home screen renders without authenication 1`] = `
+<div
+  className="Home"
+>
+  <div
+    className="lander"
+  >
+    <h1>
+      CodeNote
+    </h1>
+    <p>
+      A simple note taking app by me
+    </p>
+  </div>
+</div>
+`;

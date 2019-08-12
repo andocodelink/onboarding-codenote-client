@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home screen renders 1`] = `
+<nav
+  class="navbar navbar-default"
+>
+  <div
+    class="container-fluid"
+  >
+    <div
+      class="navbar-header"
+    >
+      <a
+        class="navbar-brand"
+        href="/"
+      >
+        CodeNote
+      </a>
+      <button
+        class="navbar-toggle collapsed"
+        type="button"
+      >
+        <span
+          class="sr-only"
+        >
+          Toggle navigation
+        </span>
+        <span
+          class="icon-bar"
+        />
+        <span
+          class="icon-bar"
+        />
+        <span
+          class="icon-bar"
+        />
+      </button>
+    </div>
+    <div
+      class="navbar-collapse collapse"
+    >
+      <ul
+        class="nav navbar-nav navbar-right"
+      >
+        <li
+          class=""
+          role="presentation"
+        >
+          <a
+            href="#"
+            role="button"
+          >
+            Logout
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+`;

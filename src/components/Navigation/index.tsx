@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 import { History } from 'history';
-import { Auth } from 'aws-amplify';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+
 import { userHasAuthenticated } from '../../actions/authenticate';
+import { logout } from '../../api'
 
 interface IProps {
   history: History,
@@ -14,9 +15,9 @@ interface IProps {
   isAuthenticated: boolean,
 }
 
-class Navigation extends React.Component<IProps> {
+export class Navigation extends React.Component<IProps> {
   handleLogout = async () => {
-    await Auth.signOut();
+    await logout();
     this.props.userHasAuthenticated(false);
     this.props.history.push('/login');
   }
@@ -50,11 +51,11 @@ class Navigation extends React.Component<IProps> {
   }
 }
 
-const mapStateToProps = (state) => ({
+export const mapStateToProps = (state) => ({
   isAuthenticated: state.authenticate.isAuthenticated,
 });
 
-const mapDispatchToProps = (dispatch) => bindActionCreators(
+export const mapDispatchToProps = (dispatch) => bindActionCreators(
   {
     userHasAuthenticated,
   },

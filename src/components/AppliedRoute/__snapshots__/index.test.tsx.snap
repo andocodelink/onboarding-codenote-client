@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home screen renders 1`] = `
+<button
+  class="btn btn-default"
+  history="[object Object]"
+  id="childId1"
+  location="[object Object]"
+  match="[object Object]"
+  type="button"
+/>
+`;
