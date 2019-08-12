@@ -6,12 +6,9 @@ import { History } from 'history';
 import { App, mapDispatchToProps } from './App';
 import { getCurrentSession, logout } from './api';
 
-const _getCurrentSession = getCurrentSession;
-const _logout = logout;
-
 jest.mock("./api", () => ({
-  getCurrentSession: jest.fn(),
-  logout: jest.fn()
+  getCurrentSession: jest.fn(() => Promise.resolve({})),
+  logout: jest.fn(() => Promise.resolve({}))
 }));
 
 describe('App', () => {
@@ -19,12 +16,6 @@ describe('App', () => {
 
   beforeAll(() => {
     window.alert = jest.fn();
-    (getCurrentSession as any).mockImplementation(() => {
-      throw _getCurrentSession();
-    });
-    (logout as any).mockImplementation(() => {
-      throw _logout();
-    });
   });
 
   afterAll(() => {
@@ -33,9 +24,11 @@ describe('App', () => {
 
   test('renders with an existing session', async () => {
     let history: any = jest.fn();
-    const wrapper = mount(<MemoryRouter><App renderChildren={false} history={history} userHasAuthenticated={(() => ({}))} /></MemoryRouter>);
+    let userHasAuthenticated = jest.fn((b) => {});
+    const wrapper = mount(<MemoryRouter><App renderChildren={false} history={history} userHasAuthenticated={userHasAuthenticated} /></MemoryRouter>);
     await Promise.resolve();
     expect(wrapper.exists()).toBe(true);
+    expect(userHasAuthenticated.mock.calls[userHasAuthenticated.mock.calls.length - 1]).toEqual([true]);
   });
 
   test('renders without a session', async () => {
@@ -43,34 +36,30 @@ describe('App', () => {
       throw new Error('error');
     });
     let history: any = jest.fn();
-    const wrapper = mount(<MemoryRouter><App renderChildren={false} history={history} userHasAuthenticated={(() => ({}))} /></MemoryRouter>);
+    let userHasAuthenticated = jest.fn((b) => {});
+    const wrapper = mount(<MemoryRouter><App renderChildren={false} history={history} userHasAuthenticated={userHasAuthenticated} /></MemoryRouter>);
     await Promise.resolve();
     expect(wrapper.exists()).toBe(true);
+    expect(userHasAuthenticated.mock.calls.length).toEqual(0);
   });
 
   test('logout handler', async () => {
-    let history: any = jest.fn();
-    history.push = (..._) => ({})
-    let expectedIsAuthen = true;
+    let push = jest.fn((uri) => {});
+    let history = {
+      push
+    }
+    let userHasAuthenticated = jest.fn((b) => {});
     let app = new App({
       renderChildren: false,
       history: history,
-      userHasAuthenticated: ((isAuthen) => {
-        expectedIsAuthen = isAuthen;
-        return { expectedIsAuthen };
-      })
+      userHasAuthenticated
     });
     (logout as any).mockImplementation(() => {
       return Promise.resolve({});
     });
     await app.handleLogout();
-    expect(expectedIsAuthen).toBe(false);
-  });
-
-  test('map dispatch to props', () => {
-    let dispatch = jest.fn();
-    let props =  mapDispatchToProps(dispatch);
-    expect(props.userHasAuthenticated).toBeInstanceOf(Function);
+    expect(userHasAuthenticated.mock.calls[userHasAuthenticated.mock.calls.length - 1]).toEqual([false]);
+    expect(push.mock.calls[push.mock.calls.length - 1]).toEqual(['/login']);
   });
 
 })

@@ -27,15 +27,6 @@ describe('Home screen', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  test('map state to props', () => {
-    let props = mapStateToProps({
-      authenticate: {
-        isAuthenticated: true 
-      }
-    });
-    expect(props.isAuthenticated).toBe(true);
-  });
-
   test('query string', () => {
     let actual = querystring("redirect", "http://facebook.com?redirect=codelink.io");
     expect(actual).toEqual("codelink.io");

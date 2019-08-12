@@ -34,19 +34,4 @@ describe('Home screen', () => {
     expect(wrapper.find('Home').state().notes).toHaveLength(10);
   });
 
-  test('map state to props', () => {
-    let props = mapStateToProps({
-      authenticate: {
-        isAuthenticated: true 
-      }
-    });
-    expect(props.isAuthenticated).toBe(true);
-  });
-
-  test('map dispatch to props', () => {
-    let dispatch = jest.fn();
-    let props =  mapDispatchToProps(dispatch);
-    expect(props.userHasAuthenticated).toBeInstanceOf(Function);
-  });
-
 })

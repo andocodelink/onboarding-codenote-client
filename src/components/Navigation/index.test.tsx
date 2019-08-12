@@ -1,9 +1,13 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import { shallow, mount, render } from 'enzyme';
-import { Button } from 'react-bootstrap';
+import { render } from 'enzyme';
 
-import { Navigation, mapStateToProps, mapDispatchToProps } from './index';
+import { Navigation } from './index';
+import { logout } from '../../api'
+
+jest.mock("../../api", () => ({
+  logout: jest.fn(() => Promise.resolve({}))
+}));
 
 describe('Home screen', () => {
   const userHasAuthenticated = () => ({});
@@ -24,33 +28,22 @@ describe('Home screen', () => {
   });
 
   test('logout handler', async () => {
-    let history: any = jest.fn();
-    history.push = (..._) => ({})
-    let expectedIsAuthen = true;
+    let push = jest.fn((uri) => {});
+    let history: any = {
+      push
+    }
+    let userHasAuthenticated = jest.fn((b) => {});
     let app = new Navigation({
       isAuthenticated: true,
-      history: history,
-      userHasAuthenticated: ((isAuthen) => {
-        expectedIsAuthen = isAuthen;
-        return { expectedIsAuthen };
-      })
+      history,
+      userHasAuthenticated
+    });
+    (logout as any).mockImplementation(() => {
+      return Promise.resolve({});
     });
     await app.handleLogout();
-    expect(expectedIsAuthen).toBe(false);
-  });
-
-  test('map state to props', () => {
-    let props = mapStateToProps({
-      authenticate: {
-        isAuthenticated: true 
-      }
-    });
-    expect(props.isAuthenticated).toBe(true);
-  });
-  test('map dispatch to props', () => {
-    let dispatch = jest.fn();
-    let props =  mapDispatchToProps(dispatch);
-    expect(props.userHasAuthenticated).toBeInstanceOf(Function);
+    expect(userHasAuthenticated.mock.calls[userHasAuthenticated.mock.calls.length - 1]).toEqual([false]);
+    expect(push.mock.calls[push.mock.calls.length - 1]).toEqual(['/login']);
   });
 
 })

@@ -23,7 +23,7 @@ interface IProps {
 
 export class App extends Component<IProps, IStates> {
   static defaultProps: IProps = {
-    userHasAuthenticated: () => ({}),
+    userHasAuthenticated: () => {},
     history: {} as History,
     renderChildren: true
   }
@@ -49,7 +49,7 @@ export class App extends Component<IProps, IStates> {
     this.setState({ isAuthenticating: false });
   }
 
-  public handleLogout = async () => {
+  handleLogout = async () => {
     await logout();
     this.props.userHasAuthenticated(false);
     this.props.history.push('/login');
